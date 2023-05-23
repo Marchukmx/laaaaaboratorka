@@ -1,33 +1,22 @@
-import logging
+def main():
 
-class Calculator:
-    def __init__(self):
-        self.logger = logging.getLogger("Calculator")
-        self.logger.setLevel(logging.INFO)
-        self.logger.addHandler(logging.StreamHandler())
+    logging.basicConfig(filename='abaza.log', level=logging.INFO)
 
-    def add(self,a,b):
-        result = a + b
-        self.logger.info(f" {a} + {b} = {result}")
-        return result
-    def minus(self,a,b):
-        result = a - b
-        self.logger.info(f" {a} - {b} = {result}")
-        return result
-    def multiply(self,a,b):
-        result = a * b
-        self.logger.info(f" {a} * {b} = {result}")
-        return result
-    def devine(self,a,b):
-        if b!=0:
-            result = a / b
-            self.logger.info(f" {a} / {b} = {result}")
-            return result
-        else:
-            raise ValueError("Помилка! Ділення на 0 ")
+    try:
+        name = input("Введіть ваше ім'я: ")
+        age = int(input("Введіть ваш вік: "))
 
-calculator1 = Calculator()
-calculator1.add(1,6)
-calculator1.minus(66,22)
-calculator1.multiply(50,2)
-calculator1.devine(800000,400000)
+        with open('data.txt', 'w') as file:
+            file.write(f'Ім\'я: {name}\n')
+            file.write(f'Вік: {age}\n')
+
+        logging.info("Дані успішно записано у файл.")
+
+    except ValueError:
+        logging.error("Помилка: Некоректний формат даних.")
+
+    except Exception as e:
+        logging.error(f"Сталася помилка: {str(e)}")
+
+if __name__ == '__main__':
+    main()
