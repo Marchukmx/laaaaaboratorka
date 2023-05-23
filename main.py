@@ -1,33 +1,26 @@
+#3
+import random
 import logging
 
-class Calculator:
-    def __init__(self):
-        self.logger = logging.getLogger("Calculator")
-        self.logger.setLevel(logging.INFO)
-        self.logger.addHandler(logging.StreamHandler())
+def main():
+    logging.basicConfig(filename='random.log', level=logging.INFO)
 
-    def add(self,a,b):
-        result = a + b
-        self.logger.info(f" {a} + {b} = {result}")
-        return result
-    def minus(self,a,b):
-        result = a - b
-        self.logger.info(f" {a} - {b} = {result}")
-        return result
-    def multiply(self,a,b):
-        result = a * b
-        self.logger.info(f" {a} * {b} = {result}")
-        return result
-    def devine(self,a,b):
-        if b!=0:
-            result = a / b
-            self.logger.info(f" {a} / {b} = {result}")
-            return result
-        else:
-            raise ValueError("Помилка! Ділення на 0 ")
+    try:
+        count = int(input("Введіть кількість чисел, які потрібно згенерувати: "))
+        a = int(input("Введість число для початку діапазону:"))
+        b = int(input("Введість число для кінця діапазону:"))
+        with open('numbers.txt', 'w') as file:
+            for i in range(1, count + 1):
+                number = random.randint(a, b)
+                file.write(f'{number}\n')
+                logging.info(f"Згенеровано число: {number}")
 
-calculator1 = Calculator()
-calculator1.add(1,6)
-calculator1.minus(66,22)
-calculator1.multiply(50,2)
-calculator1.devine(800000,400000)
+        logging.info(f"Усі числа успішно записано у файл.")
+
+    except ValueError:
+        logging.error("Помилка: Некоректний формат кількості чисел.")
+
+    except Exception as e:
+        logging.error(f"Сталася помилка: {str(e)}")
+
+main()
